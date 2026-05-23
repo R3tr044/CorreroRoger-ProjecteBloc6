@@ -15,27 +15,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pdoc  # Instalamos la herramienta moderna de documentación
       - name: Generate Docs
         run: |
-          mkdir -p docs
-          # Ejecutamos pydoc sobre el entorno actual exportando a la carpeta docs
-          python -c "
-          import os, pydoc
-          # Buscamos todos los archivos .py en blog y my_site
-          modules = []
-          for root, dirs, files in os.walk('.'):
-              if 'venv' in root or '.git' in root or 'docs' in root: continue
-              for f in files:
-                  if f.endswith('.py') and f != '__init__.py':
-                      # Convertimos la ruta del archivo en formato de módulo de pydoc
-                      mod_path = os.path.join(root, f).replace('./', '').replace('/', '.').replace('.py', '')
-                      modules.append(mod_path)
-          
-          # Generamos el HTML para cada uno dentro de docs
-          os.chdir('docs')
-          for m in modules:
-              pydoc.writedoc(m)
-          "
+          # Generamos la documentación en HTML de tus carpetas dentro de ./docs
+          pdoc --html --output-dir docs blog my_site manage.py --force
+          # Movemos el contenido para que GitHub Pages lo lea directamente en la raíz de docs
+          mv docs/blog docs/my_site docs/*.html docs/ 2>/dev/null || true
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
