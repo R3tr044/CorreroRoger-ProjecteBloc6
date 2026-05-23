@@ -18,13 +18,16 @@ jobs:
           pip install pdoc
       - name: Generate Docs
         env:
-          # Le decimos a Django dónde está la configuración para que no proteste al importar los módulos
           DJANGO_SETTINGS_MODULE: my_site.settings
         run: |
-          # Añadimos el directorio actual al PATH de Python para que encuentre 'blog' y 'my_site'
           export PYTHONPATH="${PYTHONPATH}:${PWD}"
-          # Ejecutamos pdoc apuntando a tus carpetas de código
-          pdoc -o docs blog my_site manage.py
+          # Inicializamos Django correctamente antes de que pdoc toque ningún archivo
+          python -c "
+          import django, pdoc
+          django.setup()
+          # Una vez cargado Django, disparamos pdoc de forma totalmente segura
+          pdoc.pdoc('blog', 'my_site', 'manage.py', output_directory='docs')
+          "
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
