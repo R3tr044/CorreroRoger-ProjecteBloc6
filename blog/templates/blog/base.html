@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Blog M3-UF6-DJANGO{% endblock %}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Cabecera idéntica: Fondo gris oscuro/negro que contiene el nav alineado */
+        header {
+            background-color: #212529; 
+            padding: 0.8rem 0; /* Sin padding lateral para que el nav mande */
+            width: 100%;
+        }
+
+        /* El contenedor del menú limita el ancho igual que el contenido de la web */
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: #ffffff; /* Letras blancas */
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase; /* Forzar mayúsculas como INICI / POSTS */
+            letter-spacing: 0.5px;
+        }
+
+        nav a:hover {
+            color: #cccccc;
+        }
+
+        main {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        footer {
+            background-color: #212529;
+            color: #ffffff;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.85rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="{% url 'starting-page' %}">Inici</a>
+            <a href="{% url 'posts-page' %}">Posts</a>
+            <a href="{% url 'authors-page' %}">Autors</a>
+            <a href="{% url 'tags-page' %}">Tags</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2026 Blog M3-UF6 - Roger Correro Perales</p>
+    </footer>
+
+</body>
+</html>

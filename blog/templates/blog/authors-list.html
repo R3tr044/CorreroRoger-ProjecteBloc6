@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 3rem auto; padding: 0 1.5rem;">
+    <h1>Autors del Blog</h1>
+    <ul style="list-style: none; padding: 0;">
+        {% for author in authors %}
+            <li style="padding: 1.5rem 0; border-bottom: 1px solid #eee;">
+                <h2>
+                    <a href="{% url 'author-detail' author.id %}">
+                        {{ author.first_name }} {{ author.last_name }}
+                    </a>
+                </h2>
+                <p>{{ author.email }}</p>
+            </li>
+        {% empty %}
+            <p>No hi ha autors registrats.</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

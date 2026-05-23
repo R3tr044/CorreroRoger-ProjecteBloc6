@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Etiquetes - Blog M3-UF6{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; box-sizing: border-box;">
+    
+    <h1 style="font-family: 'Segoe UI', sans-serif; font-weight: 400; font-size: 2.2rem; margin-bottom: 0.5rem; color: #212529;">
+        Etiquetes de cerca
+    </h1>
+    <p style="color: #6c757d; margin-top: 0; margin-bottom: 3rem; font-size: 1.05rem;">
+        Navega pels continguts del blog a través de les seves paraules clau.
+    </p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+        {% for tag in tags %}
+            <a href="{% url 'tag-posts' tag.tag %}" style="text-decoration: none;">
+                <span style="
+                    display: inline-block;
+                    background-color: #f8f9fa;
+                    border: 1px solid #dee2e6;
+                    padding: 0.5rem 1.2rem;
+                    border-radius: 20px;
+                    font-size: 1rem;
+                    color: #212529;
+                    transition: background-color 0.2s, color 0.2s;
+                " 
+                onmouseover="this.style.backgroundColor='#212529'; this.style.color='#ffffff';" 
+                onmouseout="this.style.backgroundColor='#f8f9fa'; this.style.color='#212529';">
+                    # {{ tag.tag }}
+                </span>
+            </a>
+        {% empty %}
+            <p style="color: #6c757d;">No hi ha etiquetes creades encara.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

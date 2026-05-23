@@ -1,0 +1,71 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}Blog M3-UF6-DJANGO{% endblock %}
+
+{% block content %}
+<section style="
+    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1600&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center 38%;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+">
+    <h1 style="
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-size: 3.2rem;
+        color: #212529;
+        margin: 0 0 5px 0;
+        font-weight: 400;
+    ">Benvingut al Blog M3 - UF6</h1>
+    <p style="
+        font-size: 1.15rem;
+        color: #495057;
+        margin: 0;
+    ">Aquest és el projecte d'aprenentatge M3-UF6 basat en Django</p>
+</section>
+
+<div style="max-width: 1100px; margin: 2.5rem auto; padding: 0 1.5rem; box-sizing: border-box;">
+    
+    <h2 style="font-family: 'Segoe UI', sans-serif; font-weight: 700; font-size: 2rem; margin-bottom: 1.5rem; color: #212529;">
+        Darrers Posts
+    </h2>
+
+    <div style="display: flex; gap: 20px; justify-content: space-between; margin-bottom: 3rem;">
+        {% for post in posts %}
+            <article style="flex: 1; border: 1px solid #dee2e6; border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; background-color: #ffffff;">
+                
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}" style="width: 100%; height: 180px; object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'blog/images/default.jpg' %}" alt="Imatge per defecte" style="width: 100%; height: 180px; object-fit: cover;">
+                {% endif %}
+
+                <div style="padding: 1.2rem; display: flex; flex-direction: column; gap: 8px;">
+                    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600; line-height: 1.4;">
+                        <a href="{% url 'post-detail-page' post.slug %}" style="color: #212529; text-decoration: none;">
+                            {{ post.title }}
+                        </a>
+                    </h3>
+                    <p style="color: #495057; line-height: 1.5; margin: 0; font-size: 0.9rem;">
+                        {{ post.excerpt|truncatechars:100 }}
+                    </p>
+                </div>
+
+            </article>
+        {% empty %}
+            <p>No hi ha posts disponibles encara.</p>
+        {% endfor %}
+    </div>
+
+    <p style="color: #495057; line-height: 1.6; font-size: 0.95rem; margin-bottom: 2rem;">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus facere iusto minus quas corporis explicabo laborum? Pariatur labore quidem cum id alias aut, earum ad, quos quae sunt est quas.
+    </p>
+
+</div>
+{% endblock %}

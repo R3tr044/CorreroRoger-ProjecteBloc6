@@ -1,0 +1,47 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title %}Perfil de {{ author.first_name }} {{ author.last_name }}{% endblock %}
+
+{% block content %}
+<main style="max-width: 900px; margin: 3rem auto; padding: 0 1.5rem;">
+    <section style="text-align: center; margin-bottom: 4rem; padding-bottom: 2rem; border-bottom: 1px solid #dee2e6;">
+        <h1 style="font-size: 2.5rem; color: #212529; margin-bottom: 0.5rem;">
+            {{ author.first_name }} {{ author.last_name }}
+        </h1>
+        <p style="color: #6c757d; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+            {{ author.bio }}
+        </p>
+    </section>
+
+    <section>
+        <h2 style="margin-bottom: 2rem; color: #333;">Posts publicats per {{ author.first_name }}</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+            {% for post in posts %}
+                <article style="border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" style="width: 100%; height: 180px; object-fit: cover;">
+                    {% else %}
+                        <div style="width: 100%; height: 180px; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #adb5bd;">
+                            <span>Sense imatge</span>
+                        </div>
+                    {% endif %}
+                    
+                    <div style="padding: 1.5rem;">
+                        <h3 style="margin: 0 0 0.5rem 0; font-size: 1.25rem;">
+                            <a href="{% url 'post-detail-page' post.slug %}" style="text-decoration: none; color: #212529;">{{ post.title }}</a>
+                        </h3>
+                        <p style="color: #6c757d; font-size: 0.9rem;">{{ post.excerpt|truncatewords:20 }}</p>
+                    </div>
+                </article>
+            {% empty %}
+                <p>Aquest autor encara no ha publicat cap post.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div style="margin-top: 4rem; text-align: center;">
+        <a href="{% url 'authors-page' %}" style="color: #007bff; text-decoration: none; font-weight: 600;">← Tornar a tots els autors</a>
+    </div>
+</main>
+{% endblock %}
