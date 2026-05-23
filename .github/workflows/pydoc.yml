@@ -18,8 +18,9 @@ jobs:
       - name: Generate Docs
         run: |
           mkdir -p docs
-          python -m pydoc -w .
-          mv *.html docs/
+          # Forzamos a pydoc a escribir directamente los HTML dentro de la carpeta docs
+          cd docs
+          python -m pydoc -w ../blog/ ../my_site/
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
