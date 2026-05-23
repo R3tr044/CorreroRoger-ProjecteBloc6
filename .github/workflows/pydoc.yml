@@ -18,9 +18,24 @@ jobs:
       - name: Generate Docs
         run: |
           mkdir -p docs
-          # Forzamos a pydoc a escribir directamente los HTML dentro de la carpeta docs
-          cd docs
-          python -m pydoc -w ../blog/ ../my_site/
+          # Ejecutamos pydoc sobre el entorno actual exportando a la carpeta docs
+          python -c "
+          import os, pydoc
+          # Buscamos todos los archivos .py en blog y my_site
+          modules = []
+          for root, dirs, files in os.walk('.'):
+              if 'venv' in root or '.git' in root or 'docs' in root: continue
+              for f in files:
+                  if f.endswith('.py') and f != '__init__.py':
+                      # Convertimos la ruta del archivo en formato de módulo de pydoc
+                      mod_path = os.path.join(root, f).replace('./', '').replace('/', '.').replace('.py', '')
+                      modules.append(mod_path)
+          
+          # Generamos el HTML para cada uno dentro de docs
+          os.chdir('docs')
+          for m in modules:
+              pydoc.writedoc(m)
+          "
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
