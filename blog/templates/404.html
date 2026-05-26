@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div style="text-align: center; padding: 50px 20px;">
+    <h1 style="font-size: 6rem; color: #dc3545; margin-bottom: 0;">404</h1>
+    <h2>Ui! Pàgina no trobada</h2>
+    <p style="font-size: 1.2rem; color: #6c757d; margin-bottom: 30px;">
+        La ruta que estàs buscant no existeix o ha estat moguda.
+    </p>
+    <a href="{% url 'index' %}" class="btn btn-primary" style="padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+        Tornar a la Portada
+    </a>
+</div>
+{% endblock %}
